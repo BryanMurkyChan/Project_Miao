@@ -80,7 +80,7 @@ Here is an example of config. json for reference
 *NOTICE: 
 The writing standard for JSON files can refer to [JSON syntax | Rookie tutorial (runoob. com)]（ https://www.runoob.com/json/json-syntax.html ）The core is line breaks and escape characters*
 
-# 2.3 Download Embedding Model
+## 2.3 Download Embedding Model
 
 ```
 cd Project_Miao_v1_0
