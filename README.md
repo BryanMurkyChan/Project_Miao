@@ -1,5 +1,5 @@
 # Project_Miao_v1.0
-A Lightweight Local Permanent Memory Engineering For LLM Role-Playing-Agent*
+A Lightweight Local Permanent Memory Engineering Project For LLM Role-Playing-Agent*
 
 ![[pig_01.png]]
 
@@ -213,4 +213,9 @@ Due to the existence of the flashback mechanism, the topic of Cyber Cat has been
 ### 3.3.5 Custom Tools
 - demo_agent.py
 - The intent recognition module recognizes the Agent mode.
-- At present, the supported tool is web_search. To improve response speed, this mode directly calls the web_search_pro of Zhipu. More custom tools will be added in the future to enable custom tool calls in multiple rounds of conversations.
+- At present, the supported tool are web_search and translation. To improve response speed, web_search_mode directly calls the web_search_pro of Zhipu, while tranlation_mode uses a specific prompt template. More custom tools will be added in the future to enable custom tool calls in multiple rounds of conversations.
+
+# 4. Licensing
+The project is intended for educational and entertainment purposes only. It is strictly prohibited for use in any commercial venture. If you wish to utilize this project for commercial purposes, you must obtain explicit permission from the author.
+This project adheres to the GNU General Public License (GPL). Please ensure that it is employed solely for academic study and not for commercial gain. Unauthorized use for commercial purposes is not permitted.
+Any unauthorized commercial use of this project will result in full responsibility for the consequences incurred by the user.
