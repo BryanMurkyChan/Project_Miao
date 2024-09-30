@@ -219,3 +219,6 @@ Due to the existence of the flashback mechanism, the topic of Cyber Cat has been
 The project is intended for educational and entertainment purposes only. It is strictly prohibited for use in any commercial venture. If you wish to utilize this project for commercial purposes, you must obtain explicit permission from the author.
 This project adheres to the GNU General Public License (GPL). Please ensure that it is employed solely for academic study and not for commercial gain. Unauthorized use for commercial purposes is not permitted.
 Any unauthorized commercial use of this project will result in full responsibility for the consequences incurred by the user.
+
+# 5. Contact author
+BryanMurkyChan@gmail.com
