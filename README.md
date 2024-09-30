@@ -213,4 +213,4 @@ Due to the existence of the flashback mechanism, the topic of Cyber Cat has been
 ### 3.3.5 Custom Tools
 - demo_agent.py
 - The intent recognition module recognizes the Agent mode.
-- At present, the supported tool is web_dearch. To improve response speed, this mode directly calls the web_dearch_com of Zhipu. More custom tools will be added in the future to enable custom tool calls in multiple rounds of conversations.
+- At present, the supported tool is web_search. To improve response speed, this mode directly calls the web_search_pro of Zhipu. More custom tools will be added in the future to enable custom tool calls in multiple rounds of conversations.
