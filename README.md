@@ -1,58 +1,68 @@
-# Project_Miao_v1.0
-A Lightweight Local Permanent Memory Engineering Project For LLM Role-Playing-Agent*
+#😼 Project_Miao_v1.0
+*面向大模型角色扮演的轻量化本地永久记忆解决方案*
 
-![[pig_01.png]]
+![default](./picture/default.png)
 
-Come and raise your very own cyber cat gracefully, as you immerse yourself in the futuristic world of digital companionship!
 
-# 1. Original
+一起来优雅地养一只属于自己的赛博猫猫吧！
 
-Currently, research on the memory of large models primarily focuses on the agent's tool invocation and planning memory. However, in the scenario of large model role-playing (Character.AI), which heavily relies on the mutual bond between the model and the user, the exploration of memory engineering holds unique value. This project, based on the application scenario of Cyber Cat, aims to explore lightweight, localized, and permanent memory engineering solutions.
-The project includes:
-- Three major sub-modules of memory engineering: memory types and management, memory recall and forgetting, memory updating and collaboration.
-- Supports memory-based dialogue, long document reading, online searching, custom tool invocation, achieving cross-model memory collaboration and dynamic cycling through memory engineering.
-- A zero-code one-click startup package.
+## 🐱 项目缘起
 
-# 2. Quick Start
+当前，关于大模型的记忆的研究大多集中于Agent的工具调用与规划记忆，而大模型角色扮演（Character.AI）这一场景，极度依赖模型与用户之间的共同羁绊，其记忆工程的探索具备独特价值，本项目基于赛博猫猫这一应用场景，探索轻量化+本地化+永久记忆的工程解决方案。
 
-One-click startup package:
+项目包含：
+- 记忆工程三大子模块：记忆类型与管理、记忆召回与遗忘、记忆更新与协同
+- 支持记忆对话、长文档阅读、联网搜索、自定义工具调用，通过记忆工程实现跨模型记忆协同与动态循环
+- 零代码一键启动包
 
-If you, esteemed user, enjoy tinkering, you may also customize your deployment by following the tutorial provided below.
-## 2.1 Requirements
+## 🚀 快速开始
 
+一键启动包：
+
+阁下如果喜欢折腾，也欢迎按照下面的教程进行自定义部署
+
+### 🖥️ 安装依赖
+
+项目版本要求：
 ```
 python >= 3.11.0
 ```
 
-Terminal:
+项目拷贝至本地
+`git clone https://github.com/BryanMurkyChan/Project_Miao_v1_0.git`
+
+命令行安装项目依赖
 ```
-git clone https://github.com/BryanMurkyChan/Project_Miao_v1_0.git`
 cd Project_Miao_v1_0
 conda create Miao
 conda activate Miao
 pip install -r requirements.txt
 ```
-## 2.2 Config
-Please configure basic information in 'config. json' under the 'module' file for building system prompt words:
-1. "Miao_Name": The name of the cat
-2. "Miao_Nick_Came": a nickname for cats
-3. "Miao_ Personality": The personality traits of cats
-4. "Miao_Language_Style": The language style of cats and can provide a few examples
-5. "Miao_2Notice": Points to note when talking to cats, it is recommended to list them in points
-6. "Miao_info_Srief": Simplified version of basic information for Cat Cat, used for memorization and summarization, expressed clearly in two or three sentences as much as possible
-7. "Miao_Semory_example": An example of memory in a cat's brain, usually in the mode of memory+reflection, which can be expressed in one's own language
-8. "User_Came": The user's name, it is recommended to use a nickname
-9. "User_Identity": the user's identity can be set at will. Generally, the owner or father is better than the mother. Brothers, sisters or other playing methods can be developed by everyone
-10. "User_Snfo": Briefly describe the user's personal information, which should include name, identity, personality, core events, etc
-11. "OPENAI_SPI_KEY": The API address provided by the user that conforms to the Openai_SPI format.
-	- Currently, the project only supports models from the Zhipu family, and GLM-4-Flash is a free model that can be experienced under economic mode;
-	- If the economy mode is not enabled, the best performing model combination will be used by default, with GLM-4-Flash as the core dialogue model, GLM-4-Plus as the tool call model, GLM-4-Long as the long document dialogue and memory summary model, GLM-4-FlashX as the intent recognition model, and web_dearch_com as the network tool.
-	- Please note that not enabling the economy mode will result in certain model call costs, which depend on the volume of conversations consumed. Roughly calculated, the average cost per month is around 10-20 yuan.
-12. "ECO-MODE": Economy mode, free trial, may not meet ideal performance expectations, ensure optimal performance, default to false, changing to true may cause a decrease in conversation performance.
-	- All large model modules use free glm-4-flash
-	- Turn off web_search
 
-Here is an example of config. json for reference
+### 🤔 配置基本信息
+
+请在`module`文件下下面的`config.json`中配置基本信息，用于构建系统提示词：
+1. "Miao_Name" : 猫猫的姓名
+2. "Miao_Nick_Name" : 猫猫的昵称
+3. "Miao_Personality" : 猫猫的性格特征
+4. "Miao_Language_Style": 猫猫的语言风格，可以给少量示例
+5. "Miao_Notice" : 猫猫对话时需要注意的事项，建议分点罗列
+6. "Miao_Info_Brief" : 猫猫的简化版基础信息，用于记忆摘要，尽量两三句话表述清楚
+7. "Miao_Memory_Example" : 猫猫脑子里的记忆举例，一般是记忆+感想的模式，可使用自己的语言表述
+8. "User_Name" : 用户的名字，建议使用昵称
+9. "User_Identity" : 用户的身份，可随意设置，一般为主人或爸比妈咪效果比较好，兄弟姐妹或者其他玩法大家可以自行开发
+10. "User_Info" : 简述用户的个人信息，应包括姓名、身份、性格、核心事件等
+11. "OPENAI_API_KEY" : 用户提供的符合Openai_API格式的API地址。
+	1. 目前项目仅支持智谱家族的模型，GLM-4-Flash为免费模型，可在经济模式下体验本项目；
+	2. 如不开启经济模式，则默认使用最佳性能的模型组合，GLM-4-Flash为核心对话模型，GLM-4-Plus为工具调用模型，GLM-4-Long为长文档对话与记忆摘要模型，GLM-4-FlashX为意图识别模型，web_search_pro为网络工具。
+	3. 请注意，不开启经济模式，会造成一定的模型调用费用，具体视对话量消耗计算，粗略计算一个月平均10~20元左右。
+12. "ECO_MODE": 经济模式，免费试用，可能无法达到理想性能预期，确保最佳性能，默认为false，改为true开启后可能会导致对话性能下降。
+- 在经济模式下：
+	1. 所有大模型模块均使用免费的glm-4-flash
+	2. 关闭网络搜索
+
+
+下面是一份供参考的config.json样例
 
 ```
 {
@@ -77,10 +87,11 @@ Here is an example of config. json for reference
 }
 ```
 
-*NOTICE: 
-The writing standard for JSON files can refer to [JSON syntax | Rookie tutorial (runoob. com)]（ https://www.runoob.com/json/json-syntax.html ）The core is line breaks and escape characters*
 
-## 2.3 Download Embedding Model
+*NOTICE: 
+json文件书写规范可参考[JSON 语法 | 菜鸟教程 (runoob.com)](https://www.runoob.com/json/json-syntax.html) 核心是换行符和转义符*
+
+## 🛜 下载embedding模型
 
 ```
 cd Project_Miao_v1_0
@@ -88,46 +99,49 @@ cd model
 python download.py
 ```
 
-## 2.4 Activate Cyber Cat！
+### 🚀 赛博猫猫，启动！
 
 ```
-python miao_main.py
+python main.py
 ```
 
-# 3. Technical Architecture
-## 3.1 Idea
-From mining model capabilities to exploring model memory, from a model project to a memory project.
-## 3.2 Memory Module
-### 3.2.1 Memory Classification
+## 🧑‍🔧 技术架构
 
-#### A. Daily/Real-time Memory
-Definition: Overall summary of daily/real-time chat records.
-- Analyze the owner's behavior, preferences, social relationships, and emotional state from the perspective of a cyber cat, and write a brief diary.
-- Stored in the 'Miao_Diary. json' file.
+### 🚩 核心理念
+从模型能力的挖掘，转变为模型记忆探索，从一个模型项目，转变为一个记忆项目。
 
-#### B. Short Term Memory
-Definition: Context memory management.
-- When the chat limit exceeds 30000-40000 characters, the overall expression effect of the commonly used large models in the market will decrease. Therefore, a memory summarization strategy will be adopted to convert the chat record into a summary, which will serve as the beginning of the context window again and return the original text of the last three rounds of conversations.
-- When clearing chat history/starting Cyber Cat, automatically summarize the last three rounds of memory from the previous conversation and dynamically update it to the system prompt words.
+### 🧐 记忆模块
 
-#### C. Long term memory
-Definition: Long term memory stored in a vector database.
-- For chat content, CS-RS-MP mode is adopted to extract structured memory from chat records.
-- Each extracted memory contains:
-	- Memory type
-		- Work study events: memory events involving work, tasks, learning, research, and exploration;
-		- Social emotional events: Memory events involving friends, relatives, friendships, socialization, entertainment, emotions, and communication. Generally, communication between a cyber cat and its owner does not belong to social emotional events, unless the owner introduces the owner's social relationships to the cyber cat;
-		- Special commemorative events: involving birthdays, anniversaries, special emotions, and memorable events;
-		- Personal life events: events involving daily life, routines, regularity, and communication between cyber cats and their owners;
-	- Importance of Memory
-		- 1 point: The most common and concise memory events, related to daily routines, casual conversations, daily life, routines, regularity, and simplicity;
-		- 2 points: General memory events related to knowledge, work, tasks, friendships, socializing, and preferences;
-		- 3 points: The most important and detailed memory events, related to commemorative, research-based, exploratory, long-term impact, complex emotions, deep social relationships, extremely special, and personal growth memory events;
-	- Associative memory
-		- Calculated using the embedding model
-		- Match text similarity with all memories in the memory database, and obtain the three memories with the highest similarity as associated memories
+#### ❤️ 记忆分类
 
-Examples：
+##### 🐱 每日/实时记忆
+定义：每日/实时聊天记录的整体总结。
+- 以赛博猫猫的视角对主人的行为、偏好、社交关系、情感状态进行分析，并撰写简要日记。
+- 储存在`Miao_Diary.json`文件中。
+
+##### 🗒️ 短期记忆
+定义：上下文记忆管理。
+- 当聊天额度超过30000~40000字符时，市面通用大模型表达效果会整体下降，采取记忆摘要的策略将聊天记录转换为摘要，重新作为上下文窗口的开始，并返回最近三轮对话原文。
+- 当清空聊天记录/启动赛博猫猫时，自动摘要上一次对话的最后三轮记忆，动态更新至系统提示词中。
+
+##### 💾 长期记忆
+定义：储存在向量数据库中的长期记忆。
+- 对于聊天内容，采取CS-RS-MP模式，对聊天记录进行结构化记忆抽取。
+- 抽取得到的每一条记忆，均包含：
+	- 记忆类型
+		- 工作学习事件：涉及到工作、任务、学习、研究、探索的记忆事件；
+		- 社交情感事件：涉及到朋友、亲人、友谊、社交、娱乐、情感、交流的记忆事件，一般情况下，赛博猫猫与主人的交流不属于社交情感事件，除非是主人向赛博猫猫介绍主人的社交关系；
+		- 特殊纪念事件：涉及到生日、纪念日、特殊情感、特别要记住的记忆事件；
+		- 个人生活事件：涉及到生活、作息、规律化、日常、赛博猫猫与主人的日常交流的事件；
+	- 记忆重要性
+		- 1分：最普通、简略的记忆事件，关于日常化、闲聊、生活、作息、规律化、简单的记忆事件；
+		- 2分：一般的记忆事件，关于知识、工作、任务、友谊、社交、喜好的记忆事件；
+		- 3分：最重要、详细的记忆事件，关于纪念性、研究性、探索性、长期影响、复杂情感、深度社交关系、极其特殊、个人成长的记忆事件；
+	- 关联记忆
+		- 使用embedding模型计算得到
+		- 与记忆数据库中所有记忆进行文本相似度匹配，获取相似度最高的三条记忆作为关联记忆
+
+样例如下：
 ```
   {
     "memory": "- 爸比提出从自然语言表示的角度进行结构化储存的问题，我介绍了知识图谱三元组的概念和构建方法。爸比询问RDF存储的细节，我解释了RDF存储的关键点，包括三元组模型、URI、图模型、RDFS和OWL、查询语言、存储系统和应用场景。感觉自己像个小小专家喵！",
@@ -144,88 +158,100 @@ Examples：
   }
 ```
 
-### 3.2.2 Memory Recall Mechanism
-#### A. Default recall
-- Condition: The intent recognition module is used by default when matching to chat mode.
-- Explanation: For each query, match the two most similar memories in the memory database and calculate the semantic similarity between the query and memory. When the semantic similarity is greater than 0.65, write memory into the prompt word and pass it into the large model for memory question answering.
-- Purpose: To ensure that the model has basic memory and cognition that conforms to user preferences.
-#### B. Keyword recall
-- Condition: Enable when the intent recognition module matches the keyword_cemory mode in memory.
-- Explanation: For user queries, they are divided into several sub questions. For each sub question, the most similar k memories are matched in the memory database. For each memory, all relate_memories are matched twice to calculate the semantic similarity between the query and all memories and relate_memories. The elements with semantic similarity greater than 0.65 are retained, and the first six are selected according to their relevance and written into the prompt word template, which is then passed into the large model for memory question answering.
-- Purpose: To ensure the deep recall ability of the model for specific memories.
+#### 🧠 记忆召回机制
+##### 🐱 默认召回
+- 条件：意图识别模块匹配为chat模式时默认使用。
+- 解释：对于每一次query，在记忆数据库中匹配最相似的两条memory，并计算query与memory之间的语义相似度，当语义相似度大于0.65时，将memory写入提示词中，传入大模型进行记忆问答。
+- 目的：确保模型具备符合用户偏好的基本记忆与认知。
 
-![[pig_02.png]]
+##### 🔑 关键词召回 
+- 条件：当意图识别模块匹配为memory下的keyword_memory模式时启用。
+- 解释：对于用户query，拆分成若干子问题，对于每一个子问题，在记忆数据库中匹配最相似的k条memory，对于每一条memory，二次匹配所有relate_memory，计算query与所有memory、relate_memory的语义相似度，保留语义相似度大于0.65的元素，按相关性高低取前六条写入提示词模板中，传入大模型进行记忆问答。
+- 目的：确保模型对特定记忆的深层回忆能力。
 
-#### C. Date recall
-- Condition: Enable when the intent recognition module matches the timetime_cemory mode of memory.
-- Explanation: For user queries, retrieve the mentioned time, query and return the daily diary in 'Miao_Diary. json', concatenate the prompt word template, and pass it into the model for memory Q&A.
-- Purpose: To ensure that the model has macro temporal memory capability.
+![miao_pig05](./picture/readme_05.png)
 
-![[pig_03.png]]
+##### 📅 日期召回
+- 条件：当意图识别模块匹配为memory的datetime_memory模式时启用。
+- 解释：对于用户query，获取提到的时间，在`Miao_Diary.json`中查询并返回当日的日记，通过提示词模板拼接后，传入模型进行记忆问答。
+- 目的：确保模型具备宏观时间记忆能力。
 
-#### D. Random memory flashback
-- Condition: Set the probability of the random function, and enable random memory flashback when the random number triggers the memory flashback condition.
-- Explanation: For user queries, retrieve the most similar 'len (memory-d b)' memories from the memory database, select the first and last memories, where the former is the most relevant memory to the user query and the latter is the least relevant memory to the user query. The prompt word template is concatenated and transmitted to the model for response.
-- Purpose: To guide the model to shift topics and simulate the effect of turn taking in real life.
+![miao_pig04](./picture/readme_04.png)
 
-![[pig_04.png]]
-![[pig_05.png]]
 
-Due to the existence of the flashback mechanism, the topic of Cyber Cat has been forcibly integrated with new content, achieving a certain sense of inspiration.
+##### ⚡ 随机记忆闪回
+- 条件：设定随机函数概率，当随机数触发记忆闪回条件时，启用随机记忆闪回。
+- 解释：对于用户query，获取记忆数据库中最相似的`len(memory_db)`条memory，选取第一条与最后一条，前者是与用户query最相关的记忆，后者是与用户query最不相关的记忆，通过提示词模板拼接后传入模型进行回答。
+- 目的：引导模型进行话题转移，模拟现实中话轮转换效果。
 
-### 3.2.3 Memory forgetting mechanism
-- Simulate the human forgetting mechanism, avoid unlimited growth of memory databases, and ensure that memories can be dynamically filtered and updated.
-- Rule:
-	- Delaying the forgetting process for all memories that are called upon during a conversation, and mentioning them multiple times, can increase the importance of memory.
-	-  For memories with a memory importance of 1, forget them after obtaining a random number.
-	- For memories with an importance of 2:
-	- Personal daily events are given a weight of 1/3 and forgotten after obtaining a random number;
-	- Work and study events are given a weight of 1/4 and forgotten after obtaining a random number;
-	- Social emotional events are given a weight of 1/5 and forgotten after obtaining a random number;
-	- For memory events with an importance of 3, randomly forget one of the two samples with semantic similarity greater than 0.95.
+例如：
+![miao_pig02](./picture/readme_02.png)
 
-## 3.3 Function Implementation
-### 3.3.1 Intent recognition
+由于闪回机制的存在，赛博猫猫的话题被强制融合了新内容，实现某种意义上的灵光一闪。
+
+#### 🗑️ 记忆遗忘机制
+- 模拟人类遗忘机制，避免记忆数据库无限制增长，确保记忆能被动态过滤更新。
+- 规则：
+	- 对于所有在对话中被调用的记忆，延缓遗忘进度，多次提及时，可增加记忆重要性。
+	- 对于记忆重要性为1的记忆，获取随机数后遗忘。
+	- 对于记忆重要性为2的记忆：
+		- 个人日常事件按照1/3的权重，获取随机数后遗忘；
+		- 工作学习事件按照1/4的权重，获取随机数后遗忘；
+		- 社交情感事件按照1/5的权重，获取随机数后遗忘；
+	- 重要性为3的记忆事件，对于语义相似度大于0.95的两个样本，随机遗忘其中一个。
+
+### 😸 功能实现
+#### 🤔 意图识别
 - Intent_Recognition.py
-- Based on glm-4-flashX implementation, it is called separately before each conversation. After testing, the average response time is 0.55 seconds.
-- Intent recognition returns a JSON dictionary, including the following situations:
-	- Default dialogue mode, which supports [[[Painted Xiaomiao Open Source Project - Document] ProjectnMiao-v1.0 README_ZH # a. Default Recall | Default Recall Mode]] and [[[Painted Xiaomiao Open Source Project - Document] ProjectnMiao-v1.0 README_ZH # c. Random Memory Flashback | Random Memory Flashback Mode]]
+- 基于glm-4-flashX实现，每次对话前单独调用，经测试，平均响应速度为0.55秒。
+- 意图识别返回json字典，包含以下情况：
+	- 默认对话模式，该模式下，支持[[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#a. 默认召回 | 默认召回模式]]与[[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#c. 随机记忆闪回 | 随机记忆闪回模式]]
 		- `{"mode":"chat", "type":"chat"}`
-	- Memory mode
-		- [[[[Qi Xiaomiao Open Source Project - Document] Project_Siao-v1.0 README_ZH # b. Keyword Recall | Keyword Recall]] Mode ` {"mode": "memory", "type": "keyword_cemory"}`
-		- [[[[Qi Xiaomiao Open Source Project - Document] Project_Siao-v1.0 README_ZH # b. Date Recall | Date Recall]] Mode ` {"mode": "memory", "type": "date_cemory"}`
-	- Agent mode (currently only supports network search, developing OS file processing and Obsidian knowledge management functions)
-		- [[[Qi Xiaomiao Open Source Project - Document] Project_Siao-v1.0 README_ZH # 3.3.4 Network Search | Network Search]] Mode ` {"mode": "agent", "type": "web_dearch"}`
-### 3.3.2 Dialogue
+	- 记忆模式
+		- [[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#b. 关键词召回 | 关键词召回]] 模式 `{"mode":"memory", "type":"keyword_memory"}`
+		- [[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#b. 日期召回 | 日期召回]] 模式 `{"mode":"memory", "type":"date_memory"}`
+	- Agent模式（目前仅支持网络搜索，正在开发os文件处理与obsidian知识管理功能）
+		- [[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#3.3.4 联网搜索 | 联网搜索]] 模式 `{"mode":"agent","type":"web_search"}`
+
+#### 🐱 对话
 - demo_chat.py
-- Memory dialogue is conducted based on four memory recall modes in [[[Lacquer Xiaomiao Open Source Project Document] Project_Siao-v1.0 README_ZH # 3.2.2 Memory Recall Mechanism | Memory Recall Mechanism]].
-### 3.3.3 Long document reading
+- 基于[记忆召回](#-记忆召回机制)中的4种记忆召回模式进行记忆对话。
+
+![default](./picture/default.png)
+
+#### 📃 长文档阅读
 - demo_document.py
-- After uploading the document, it automatically switches to long document reading mode, enabling the long document reading model (taking glm-4-long as an example). The first round of replies is a document summary, and subsequent replies are based on the long document information for Q&A.
-- The original text of the long document is not written into the local chat history, and the summary and subsequent document Q&A are written into the chat history using a specific identifier \ [document mode] to prevent confusion during memory summarization.
-- Clear documents, clear chat history, or enter the "Exit Document Mode"/"Clear Chat History" command in the input box to return to the default chat_demo mode.
-### 3.3.4 Internet Search
+- 上传文档后，自动转换为长文档阅读模式，启用长文档阅读模型（以glm-4-long为例），第一轮回复为文档摘要，后续回复基于长文档信息进行问答。
+- 长文档原文不写入本地聊天记录历史，摘要与后续文档问答以特定标识符\[文档模式]写入聊天历史记录，以防止记忆总结时出现混乱。
+- 清除文档、清空聊天记录或在输入框输入“退出文档模式”/“清空聊天记录”指令，即可返回默认的chat_demo模式。
+
+![document01](./picture/document_mode01.png)
+![document02](./picture/document_mode02.png)
+
+#### 🏄‍ 联网搜索
 - demo_chat.py
-- The intent recognition module recognizes the networked search mode.
-- Call Zhipu web_dearch_com for online search, obtain preliminary return results, and perform large-scale model rough processing.
-- The rough machining results are submitted to the chat model for Q&A as prompts for engineering splicing.
-- At present, online search only supports single round conversations, and will be merged into demo_agent.exe as part of multi round agents in the future.
-### 3.3.5 Custom Tools
+- 意图识别模块识别到联网搜索模式。
+- 调用智谱web_search_pro进行联网搜索，获取初步返回结果后进行大模型粗加工。
+- 粗加工结果以提示工程拼接提交给chat模型进行问答。
+- 目前联网搜索仅支持单轮对话，后续将合并至demo_agent.py中成为多轮agent的一部分。
+
+![联网搜索](./picture/web_search_example.png)
+
+![翻译](./picture/translation_example.png)
+
+#### 🔧 自定义工具
 - demo_agent.py
-- The intent recognition module recognizes the Agent mode.
-- At present, the supported tool are web_search and translation. To improve response speed, web_search_mode directly calls the web_search_pro of Zhipu, while tranlation_mode uses a specific prompt template. More custom tools will be added in the future to enable custom tool calls in multiple rounds of conversations.
+- 意图识别模块识别到Agent模式。
+- 目前支持工具为web_search、translation，为提高响应速度，web_search下，该模式直接调用智谱的web_search_pro，translation下，直接调用另一套系统提示词；后续将加入更多自定义tools，实现多轮对话下的自定义工具调用。
 
-# 4. Licensing
-The project is intended for educational and entertainment purposes only. It is strictly prohibited for use in any commercial venture. If you wish to utilize this project for commercial purposes, you must obtain explicit permission from the author.
-This project adheres to the GNU General Public License (GPL). Please ensure that it is employed solely for academic study and not for commercial gain. Unauthorized use for commercial purposes is not permitted.
-Any unauthorized commercial use of this project will result in full responsibility for the consequences incurred by the user.
+## 🎫 开源协议
+本项目仅用于教育和娱乐目的。如果您希望将该项目用于商业目的，必须获得作者的明确许可。 本项目遵循GNU通用公共许可证（GPL）。请确保仅将其用于学术研究，而不用于商业盈利。未经授权的商业用途是不允许的。任何未经授权的商业使用该项目，用户将承担由此产生的全部后果。
 
-# 5. Contact Author
+## 📫 联系作者
 BryanMurkyChan@gmail.com
 
-# 6. Cite
-If this project has been helpful to your work, please cite it using the following format:
-
+## 🔗 引用
+如果本项目对您的工作有所帮助，请使用以下格式引用：
 ```bibtex
 @misc{Project_Miao,
     title={Project_Miao},
@@ -234,3 +260,7 @@ If this project has been helpful to your work, please cite it using the followin
     year={2024}
 }
 ```
+
+## 💕 致谢
+- [ChatGLM3]([https://github.com/THUDM/ChatGLM3])
+- [TinyRAG]([https://github.com/KMnO4-zx/TinyRAG])
