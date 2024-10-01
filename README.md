@@ -220,5 +220,17 @@ The project is intended for educational and entertainment purposes only. It is s
 This project adheres to the GNU General Public License (GPL). Please ensure that it is employed solely for academic study and not for commercial gain. Unauthorized use for commercial purposes is not permitted.
 Any unauthorized commercial use of this project will result in full responsibility for the consequences incurred by the user.
 
-# 5. Contact author
+# 5. Contact Author
 BryanMurkyChan@gmail.com
+
+# 6. Cite
+If this project has been helpful to your work, please cite it using the following format:
+
+```bibtex
+@misc{Project_Miao,
+    title={Project_Miao},
+    author={Wenhui Chen},
+    url={https://github.com/BryanMurkyChan/Project_Miao},
+    year={2024}
+}
+```
