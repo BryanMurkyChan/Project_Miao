@@ -7,14 +7,12 @@ from collections.abc import Iterable
 from typing import Any, Protocol
 from huggingface_hub.inference._text_generation import TextGenerationStreamResponse, Token
 from transformers import AutoModel, AutoTokenizer, AutoConfig
-from bigdl.llm.transformers import AutoModel
 from transformers.generation.logits_process import LogitsProcessor
 from transformers.generation.utils import LogitsProcessorList
 from module.conversation import Conversation
 from zhipuai import ZhipuAI
 from openai import OpenAI
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from ipex_llm.transformers import AutoModelForCausalLM
 import datetime
 import json
 
