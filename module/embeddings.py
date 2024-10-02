@@ -9,7 +9,10 @@ import numpy as np
 os.environ['CURL_CA_BUNDLE'] = ''
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())
-
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
+with open(CONFIG_PATH, "r", encoding="utf-8")as f:
+    config = json.load(f)
+OPENAI_API = config["OPENAI_API"]
 
 class BaseEmbeddings:
     """
@@ -82,7 +85,7 @@ class ZhipuEmbedding(BaseEmbeddings):
         super().__init__(path, is_api)
         if self.is_api:
             from zhipuai import ZhipuAI
-            self.client = ZhipuAI(api_key="334328d1d39f6f7730c99cded7fa31f1.6FxQ8m1418kuEkIH")
+            self.client = ZhipuAI(api_key="OPENAI_API")
 
     def get_embedding(self, text: str) -> List[float]:
         response = self.client.embeddings.create(
