@@ -118,7 +118,7 @@ class BgeEmbedding(BaseEmbeddings):
     class for BGE embeddings
     """
 
-    def __init__(self, path: str = './model/stella-base-zh-v3', is_api: bool = False) -> None:
+    def __init__(self, path: str = './model/infgrad/stella-base-zh-v3', is_api: bool = False) -> None:
         super().__init__(path, is_api)
         self._model = self.load_model(path)
 
