@@ -165,7 +165,13 @@ class History_Management():
         return len(history_data)
 
     def save_conversation_to_file(self, history, is_document_mode=False, is_fc_mode=False):
+        today = datetime.now().strftime("%Y-%m-%d")
+        CHAT_HISTORY_FILE = f'./memory_storage/miao_memory/chat_history/{today}_chat_history.txt'
         with open(CHAT_HISTORY_FILE, 'a', encoding='utf-8') as file:
+            now = datetime.now()
+            TIME_CHINESE_FORMAT = "{0}年{1}月{2}日 {3}时{4}分{5}秒".format(
+            now.year, now.month, now.day, now.hour, now.minute, now.second
+        )
             file.write(TIME_CHINESE_FORMAT + "\n")
             if str(history[-1].role) == "<|user|>":
                 if is_document_mode:
