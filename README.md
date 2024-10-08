@@ -102,8 +102,11 @@ python download.py
 ### 🚀 赛博猫猫，启动！
 
 ```
-python main.py
+cd Project_Miao_v1_0
+python miao_main.py
 ```
+
+windows党也可以直接双击miao_demo.bat文件
 
 ## 🧑‍🔧 技术架构
 
