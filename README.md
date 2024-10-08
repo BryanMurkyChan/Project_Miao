@@ -208,13 +208,14 @@ windows党也可以直接双击miao_demo.bat文件
 - Intent_Recognition.py
 - 基于glm-4-flashX实现，每次对话前单独调用，经测试，平均响应速度为0.55秒。
 - 意图识别返回json字典，包含以下情况：
-	- 默认对话模式，该模式下，支持[[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#a. 默认召回 | 默认召回模式]]与[[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#c. 随机记忆闪回 | 随机记忆闪回模式]]
+	- 默认对话模式，该模式下，支持默认召回与随机记忆闪回。
 		- `{"mode":"chat", "type":"chat"}`
 	- 记忆模式
-		- [[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#b. 关键词召回 | 关键词召回]] 模式 `{"mode":"memory", "type":"keyword_memory"}`
-		- [[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#b. 日期召回 | 日期召回]] 模式 `{"mode":"memory", "type":"date_memory"}`
-	- Agent模式（目前仅支持网络搜索，正在开发os文件处理与obsidian知识管理功能）
-		- [[【漆小喵开源项目-文档】Project_Miao_v1.0 README_ZH#3.3.4 联网搜索 | 联网搜索]] 模式 `{"mode":"agent","type":"web_search"}`
+		- 关键词召回模式 `{"mode":"memory", "type":"keyword_memory"}`
+		- 日期召回模式 `{"mode":"memory", "type":"date_memory"}`
+	- Agent模式（目前仅支持网络搜索和翻译，正在开发os文件处理与obsidian知识管理功能）
+		- 联网搜索模式 `{"mode":"agent","type":"web_search"}`
+    		- 翻译模式`{"mode":"agent","type":"tranlation_agent"}`
 
 #### 🐱 对话
 - demo_chat.py
