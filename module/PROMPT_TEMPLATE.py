@@ -238,7 +238,7 @@ OTHER_PROMPT_TEMPLATE = {
 
 ### agent模式 ###
 agent模式是需要模型调用特定工具完成任务的模式，目前的工具有web_search_agent、translation_agent、other_agents。
-web_search_agent是用户需要模型上网搜索信息的agent。
+web_search_agent是用户需要模型上网搜索信息的agent。请注意，涉及到代码的提问，一律使用chat模式而不是agent模式。
 translation_agent是用户需要模型进行翻译的agent。
 other_agents是其他agent。
 
@@ -281,7 +281,7 @@ chat模式是默认的情况，不需要启动agent模式与memory模式时，�
 {present_query}
 """,
 
-"Get_Time":"""现在是{time}，请识别句子里的日期，如果句子中存在日期，请以'%Y-%m-%d'的格式返回，如果句子中不存在日期，请返回“句子中不存在日期”，不要返回任何其他内容。句子：{query}""",
+"Get_Time":"""现在是{time}，请识别句子里的日期，除明确指定年份外，句子里的日期默认与现在同一年，如果句子中存在日期，请以'%Y-%m-%d'的格式返回，如果句子中不存在日期，请返回“句子中不存在日期”，不要返回任何其他内容。句子：{query}""",
 
 "Self_Query":"请将下面的句子的关键词切分成若干个子问题，每一个子问题单独作为一个问句，使用“-”切分，不要返回任何解释。以下是句子：{text}",
 
