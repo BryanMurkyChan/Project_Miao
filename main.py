@@ -54,9 +54,12 @@ def main_bg(main_bg):
         unsafe_allow_html=True
     )
 
+# 亮色模式的壁纸参考👇
 # main_bg('./picture/background04.png')
+# 暗色模式的壁纸参考👇
 main_bg('./picture/01.jpg')
 
+# 浏览器建议使用edge，在右上角找到setting，切换为暗色模式，使用下面这套style
 hide_streamlit_style = """
 <style>
     .st-emotion-cache-h4xjwg{
@@ -79,7 +82,7 @@ hide_streamlit_style = """
     }
 </style>
 """
-
+# 亮色模式选择这一套
 # hide_streamlit_style = """
 # <style>
 #     .st-emotion-cache-h4xjwg{
@@ -228,37 +231,6 @@ st.title(f"😽{User_Identity}，{Miao_Nick_Name}想你了")
 st.markdown(
     f"😻来跟{Miao_Nick_Name}聊天吧~",
     unsafe_allow_html=True)
-
-# if not check_file_updated(HISTORY_PATH):
-#     free_time_activate = True
-
-# if free_time_activate:
-#     # random_num = random.randint(0,1)
-#     random_num = 0
-#     if random_num == 1:
-#         miao_query = miao_query.main()
-#         free_time_activate = False
-
-# def get_miao_query(query:None):
-#     if query:
-#         return query
-
-# query = None
-
-# miao_query = get_miao_query(query)
-
-# if miao_query:
-#     demo_chat.main(
-#                 ir_result=None,
-#                 miao_query=miao_query,
-#                 retry=retry,
-#                 top_p=top_p,
-#                 temperature=temperature,
-#                 prompt_text=None,
-#                 system_prompt=st.session_state.system_prompt,
-#                 repetition_penalty=repetition_penalty,
-#                 max_tokens=max_new_token,
-#             )
 
 prompt_text = st.chat_input(
     'Chat with Miao!',
