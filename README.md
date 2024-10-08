@@ -1,4 +1,4 @@
-#😼 Project_Miao_v1.0
+# 😼 Project_Miao_v1.0
 *面向大模型角色扮演的轻量化本地永久记忆解决方案*
 
 ![default](./picture/default.png)
