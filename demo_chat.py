@@ -104,7 +104,7 @@ def main(
         if prompt_text == "" and retry == False:
             print("\n== Clean ==\n")
             st.session_state.chat_history = []
-            with st.spinner("嗷嗷，太阳晒屁股了，喵喵正在摸爬滚打地起床，脑壳困困的~"):
+            with st.spinner(f"嗷嗷，太阳晒屁股了，{Miao_Nick_Name}正在摸爬滚打地起床，脑壳困困的~"):
                 json_info = load_json(MEMORY_DB_PATH, MEMORY_VECTORS_PATH)
                 memory_db_content, memory_vector = json_info[1], json_info[2]
                 memory_db = json_info[0]
@@ -233,21 +233,22 @@ def main(
 
                             print(top_six_memories)
 
-                            for memory in top_six_memories:
-                                History_Manager.save_memory_record(memory)
-
-                            keyword_memory = "\n".join(top_six_memories)
-                            keyword_memory_prompt = RAG_PROMPT_TEMPLATE["Remember_prompt_template_default"].format(
-                                Miao_Name=Miao_Name,
-                                memory=keyword_memory,
-                                User_Identity=User_Identity)
-
-
-                            history[-1].content = keyword_memory_prompt + history[-1].content
-                            with st.expander(f"{User_Identity}，{Miao_Nick_Name}脑瓜子里想起了一些记忆碎片耶~",expanded=False,icon="🍼"):
-                                keyword_memory_prompt = keyword_memory_prompt.replace("<memory_begin>\n请注意，这是漆小喵脑瓜子中关于过去的记忆片段，可能与本次对话有关联。\n如果这段记忆有关联，请结合记忆回答，如果没有关联，请使用自身能力回答。\n以下是可能关联的记忆片段：","")
-                                keyword_memory_prompt = keyword_memory_prompt.replace("<memory_end>\n爸比的提问：","")
-                                st.write(keyword_memory_prompt)
+                            if top_six_memories:
+                                for memory in top_six_memories:
+                                    History_Manager.save_memory_record(memory)
+    
+                                keyword_memory = "\n".join(top_six_memories)
+                                keyword_memory_prompt = RAG_PROMPT_TEMPLATE["Remember_prompt_template_default"].format(
+                                    Miao_Name=Miao_Name,
+                                    memory=keyword_memory,
+                                    User_Identity=User_Identity)
+    
+    
+                                history[-1].content = keyword_memory_prompt + history[-1].content
+                                with st.expander(f"{User_Identity}，{Miao_Nick_Name}脑瓜子里想起了一些记忆碎片耶~",expanded=False,icon="🍼"):
+                                    keyword_memory_prompt = keyword_memory_prompt.replace("<memory_begin>\n请注意，这是漆小喵脑瓜子中关于过去的记忆片段，可能与本次对话有关联。\n如果这段记忆有关联，请结合记忆回答，如果没有关联，请使用自身能力回答。\n以下是可能关联的记忆片段：","")
+                                    keyword_memory_prompt = keyword_memory_prompt.replace("<memory_end>\n爸比的提问：","")
+                                    st.write(keyword_memory_prompt)
                                                 
                         elif ir_result["mode"] == "chat":
                             if Recall.flash_back_triger(prompt_text) == 1:
