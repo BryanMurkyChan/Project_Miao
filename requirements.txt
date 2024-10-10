@@ -16,6 +16,7 @@ PyPDF2
 python-dotenv==1.0.1
 python_docx==1.1.0
 python_pptx==1.0.0
+pytorch==2.1.2
 Requests==2.32.3
 sentence_transformers==3.0.1
 streamlit==1.37.0
