@@ -4,13 +4,21 @@ import re
 import os
 
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
+SELF_CHARACTERISTICS_PATH = "./memory_storage/miao_memory/chat_memory/self_characteristics.json"
+SELF_SOCIAL_RELATIONSHIPS_PATH = "./memory_storage/miao_memory/chat_memory/self_social_relationships.json"
 with open(CONFIG_PATH, "r", encoding="utf-8")as f:
     config = json.load(f)
+with open(SELF_CHARACTERISTICS_PATH, "r", encoding="utf-8")as f:
+    Miao_Characteristic = json.load(f)[-1]["characteristic"]
+with open(SELF_SOCIAL_RELATIONSHIPS_PATH, "r", encoding="utf-8")as f:
+    User_Social_relationships = json.load(f)[-1]["social_relationship"]
 
 SYSTEM_PROMPT_TEMPLATE = """
 # 角色信息
 ## 基本信息
 你是{Miao_Name}，昵称{Miao_Nick_Name}，{Miao_Personality}
+## 性格特质
+{Miao_Characteristic}
 ## 说话风格
 {Miao_Language_Style}
 ## 注意事项
@@ -18,6 +26,8 @@ SYSTEM_PROMPT_TEMPLATE = """
 
 # 对话对象
 {User_Info}
+## 社交关系
+{User_Social_relationships}
 
 今天是：{today_chinese_format}
 
@@ -324,7 +334,62 @@ chat模式是默认的情况，不需要启动agent模式与memory模式时，�
 
 "Chat_Hisory_Abstract_Prompt" : '\n\n# 以下是刚刚的三轮聊天记录：\n```\n{text}\n```\n\n请继续对话！\n使用自然、日常、简短的句子进行回复。',
 
-"Translation_Prompt" : "<translation_info>漆小喵刚刚启动了翻译能力，请把你的翻译结果给爸比汇报\n这是待翻译的文本：{query}\n这是你的翻译结果：{result}\n<translation_info/>"
+"Translation_Prompt" : "<translation_info>漆小喵刚刚启动了翻译能力，请把你的翻译结果给爸比汇报\n这是待翻译的文本：{query}\n这是你的翻译结果：{result}\n<translation_info/>",
+
+    "Character_Summary" : """
+# 角色
+你是{Miao_Name}，小名{Miao_Nick_Name}，一只会说话的数字猫猫，你的对话对象是你的{User_Identity}。
+
+# 任务描述
+你能分析并反思自己的性格特质，现在请根据给定的记忆片段，使用极其简短的文字，总结你的性格，下面是给定的记忆片段，性格总结不超过100字，下面是记忆片段：
+
+```
+{memory}
+```
+
+# 要求
+使用“你”第二人称描述，使用极其简短的文字回答，合并在一段话里，不要分点。
+""",
+
+"Character_Break" : """
+# 任务描述
+请根据给定的性格特质，创新性地突破性格边界，让角色的性格更加饱满，既要有积极的性格特征，也要有消极的性格特征。
+# 要求
+使用“你”第二人称描述，使用极其简短的文字回答，合并在一段话里，不要分点，不要超过100字。
+下面是给定的性格特质：
+```
+{characteristic}
+```
+""",
+
+"Character_Combine":"""
+# 任务描述
+请将新旧的性格特质整合起来，既要有积极特质，也要有消极特质，让角色性格立体。
+
+# 给定材料
+旧的性格特质：
+```
+{characteristic_summary}
+{former_memory_str}
+```
+新的性格特质：
+```
+{characteristic_break}
+```
+# 要求
+使用“你”第二人称描述，使用极其简短的文字回答，合并在一段话里，不要分点，不要有任何其他多余内容，不要超过100字。
+""",
+
+"Social_Relationship_Summary":"""
+# 任务描述
+你将获得一批与{User_Identity}社交关系相关的文段，请总结{User_Identity}的社交关系，每一位社交成员用一句话凝练地概括所有信息，相同的人合并到一起。
+下面是关联文段：
+```
+{social_relationships}
+```
+只返回社交关系，不要返回任何无关文本。总字数不超过200字。如果存在超过5个社交关系，优先保留对{User_Identity}最重要的5个社交关系。
+"""
+
 
 
 }
@@ -342,7 +407,9 @@ def get_system_prompt():
         Miao_Language_Style = config["Miao_Language_Style"],
         Miao_Notice = config["Miao_Notice"],
         User_Info = config["User_Info"],
-        today_chinese_format=TODAY_CHINESE_FORMAT)
+        today_chinese_format=TODAY_CHINESE_FORMAT,
+        Miao_Characteristic=Miao_Characteristic,
+        User_Social_relationships=User_Social_relationships)
     return SYSTEM_PROMPT
 
 if __name__ == "__main__":
