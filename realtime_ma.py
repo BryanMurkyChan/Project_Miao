@@ -37,6 +37,8 @@ TMP_FOLDER_PATH = "./memory_storage/miao_memory/chat_memory/tmp"
 BACKUP_FOLDER_PATH = "./memory_storage/VBstorage/backup"
 SOURCE_FOLDER_PATH = "./memory_storage/VBstorage"
 FORGET_RECORD_PATH = "./memory_storage/miao_memory/chat_memory/forget_record.json"
+SELF_CHARACTERISTICS_PATH = "./memory_storage/miao_memory/chat_memory/self_characteristics.json"
+SELF_SOCIAL_RELATIONSHIPS_PATH = "./memory_storage/miao_memory/chat_memory/self_social_relationships.json"
 CONFIG_PATH = './module/config.json'
 
 with open(CONFIG_PATH, "r", encoding="utf-8")as f:
