@@ -296,14 +296,16 @@ def main(
                             else:
                                 default_memory = Recall.remember_with_vector(embedding, vector, prompt_text)
                                 prompt_text_embedding = embedding.get_embedding(prompt_text)
-                                similarity_filter = []
+                                # similarity_filter = []
+                                similarity_filter = set()
                                 for memory in default_memory:
                                     memory_embedding = memory[1]
                                     similarity = vector.get_similarity(prompt_text_embedding,memory_embedding)
                                     if similarity >= 0.65:
                                         print(memory[0])
                                         print(similarity)
-                                        similarity_filter.append(memory[0])
+                                        # similarity_filter.append(memory[0])
+                                        similarity_filter.add(memory[0])
                                 
                                 final_default_memory = []
                                 if similarity_filter:
@@ -311,12 +313,14 @@ def main(
                                         memory_dict = Recall.find_dict_by_value(value=memory, lst=memory_db)
                                         memory_content = memory_dict["date"] + " " + memory_dict["memory"]
                                         final_default_memory.append(memory_content)
-                                similarity_filter_clean = []
-                                for i in final_default_memory:
-                                    if i not in similarity_filter_clean:
-                                        similarity_filter_clean.append(i)
                                 
-                                final_default_memory = similarity_filter_clean
+                                final_default_memory = list(set(final_default_memory))
+                                # similarity_filter_clean = []
+                                # for i in final_default_memory:
+                                #     if i not in similarity_filter_clean:
+                                #         similarity_filter_clean.append(i)
+                                
+                                # final_default_memory = similarity_filter_clean
 
                                 for memory in final_default_memory:
                                     History_Manager.save_memory_record(memory)
