@@ -570,6 +570,179 @@ for item in os.listdir(HISTORY_FOLDER_PATH):
     if os.path.isfile(item_path) and not item.startswith(today) and item.endswith('.txt'):
         os.remove(item_path)
 
+# 5. 性格自更新机制与社交关系自更新机制
+
+# 5.1 性格自更新机制：从memorydb中读取今日记忆及关联记忆，更新性格属性，写入systemprompt中（sp部分须在prompt_template.py文件中更新）
+# 5.1.1 从memorydb中读取今日记忆及所有关联记忆，通过格式化拼接成一个字符串
+with open(MEMORY_DB_PATH,"r",encoding="utf-8")as f:
+    memory_db = json.load(f)
+
+today_memory = []
+for memory in memory_db:
+    if memory["date"] == today_chinese_format:
+        today_memory.append(memory["date"] + " " + memory["memory"])
+        today_memory+=[relate_memory for relate_memory in memory["attribute"]["relate_memory"]]
+
+today_memory_filter = []
+for memory in today_memory:
+    if memory not in today_memory_filter:
+        today_memory_filter.append(memory)
+today_memory = today_memory_filter
+
+print(len(today_memory))
+print(today_memory)
+
+memory_str = "今日记忆：\n"
+
+for memory in today_memory:
+    memory_str = memory_str + memory + "\n"
+
+print(memory_str)
+
+# 5.1.2 如果存在已有的性格，则追加至字符串中。
+if os.path.exists(SELF_CHARACTERISTICS_PATH):
+    with open(SELF_CHARACTERISTICS_PATH,"r",encoding="utf-8")as f:
+        self_characteristics = json.load(f)
+    former_memory_str = "之前的性格特征：\n" + self_characteristics[-1]["characteristic"]
+else:
+    former_memory_str = ""
+
+# 5.1.3 将今日记忆及所有关联记忆，通过flash_client更新性格属性，要求（1）总结性格（2）突破性格边界（3）结合已有systemprompt生成新的性格
+charactoristic_summary_prompt = OTHER_PROMPT_TEMPLATE['Character_Summary'].format(
+    Miao_Name=config["Miao_Name"],
+    Miao_Nick_Name=config["Miao_Nick_Name"], 
+    User_Identity=config["User_Identity"], 
+    memory=memory_str)
+characteristic_summary = flash_client.generate_result(memory_str)
+
+print("char_summary")
+print(characteristic_summary)
+
+characteristic_break_prompt = OTHER_PROMPT_TEMPLATE['Character_Break'].format(
+    # Miao_Name=config["Miao_Name"],
+    # Miao_Nick_Name=config["Miao_Nick_Name"], 
+    # User_Identity=config["User_Identity"], 
+    characteristic=characteristic_summary)
+characteristic_break = plus_client.generate_result(characteristic_break_prompt)
+
+print("char_break")
+print(characteristic_break)
+
+characteristic_combine_prompt = OTHER_PROMPT_TEMPLATE['Character_Combine'].format(
+    # Miao_Name=config["Miao_Name"],
+    # Miao_Nick_Name=config["Miao_Nick_Name"], 
+    # User_Identity=config["User_Identity"], 
+    characteristic_summary=characteristic_summary,
+    former_memory_str=former_memory_str,
+    characteristic_break=characteristic_break,
+)
+
+characteristic_combine = plus_client.generate_result(characteristic_combine_prompt)
+
+print("char_combine")
+print(characteristic_combine)
+
+# self_characteristics = []
+
+characteristic_combine_json = {
+    "time":present_time,
+    "characteristic":characteristic_combine
+}
+
+self_characteristics.append(characteristic_combine_json)
+
+print(self_characteristics)
+
+# 5.1.4 将更新的性格实时写入self_characteristics.json中
+
+with open(SELF_CHARACTERISTICS_PATH,"w",encoding="utf-8")as f:
+    json.dump(self_characteristics,f,indent=2,ensure_ascii=False)
+
+# 5.2 社交关系自更新机制：从memorydb中配合vectorstore，基于语义相似度0.7设置“社交关系”检索阈值，配合selfquery机制，整合所有社交关系，更新社交关系属性，写入systemprompt中（sp部分需在prompt_template.py文件中更新）
+# 5.2.1 设置“社交关系”检索阈值，要求小于0.95，大于0.7
+social_block_min = 0.6
+social_block_max = 0.95
+# 5.2.2 构建selfquery机制，遍历检索所有社交关系，根据相似度阈值剔除无关或高度重合内容，
+User_Identity=config["User_Identity"]
+query_keywords = [f"{User_Identity}的社交关系",f"{User_Identity}的人际关系",f"{User_Identity}的朋友",f"{User_Identity}的亲人",f"{User_Identity}的同学",f"{User_Identity}的家人",f"{User_Identity}的同事"]
+
+def load_json(MEMORY_DB_PATH, MEMORY_VECTORS_PATH):
+    with open(MEMORY_DB_PATH,"r",encoding = "utf-8")as f:
+        memory_db = json.load(f)
+    memory_db_content = [memory["memory"] for memory in memory_db]
+
+    with open(MEMORY_VECTORS_PATH,"r",encoding="utf-8")as f:
+        vectors_list = json.load(f)
+    memory_vector = [np.array(vector, dtype=np.float32) for vector in vectors_list]
+
+    return [memory_db, memory_db_content, memory_vector]
+
+def load_memory(memory_db_content, memory_vector):
+    vector_store = VectorStore(memory_db_content, memory_vector)
+    index = faiss.read_index(INDEX_PATH+"/Memory_Vectors.index")
+    vector_store.set_index(index=index)
+    print(vector_store.index.ntotal)
+    return vector_store
+
+
+memory_db, memory_db_content, memory_vector = load_json(MEMORY_DB_PATH, MEMORY_VECTORS_PATH)
+vector_store = load_memory(memory_db_content, memory_vector)
+
+social_relation_memories = []
+for query_keyword in query_keywords:
+    k=len(memory_db_content)
+    query_results = vector_store.query_with_vector(query=query_keyword, EmbeddingModel=embedding, k=k)
+    query_keyword_embedding = embedding.get_embedding(query_keyword)
+    for query_result in query_results:
+        similarity = vector_store.get_similarity(query_keyword_embedding, query_result[1])
+        print(query_result[0])
+        print(similarity)
+        if similarity > social_block_min and similarity < social_block_max:
+            social_relation_memories.append(query_result[0])
+
+social_relation_memories_filter = []
+for memory in social_relation_memories:
+    if memory not in social_relation_memories_filter:
+        social_relation_memories_filter.append(memory)
+
+social_relation_memories = social_relation_memories_filter
+print(social_relation_memories)
+print(len(social_relation_memories))
+
+# 5.2.3 将社交关系记忆碎片拼接整合，拼接成字符串
+social_relationships_str = "这是漆小喵记忆中所有关于爸比社交关系的记忆碎片：\n" + "\n".join(social_relation_memories)
+
+# 5.2.4 如果存在已有的社交关系，则追加至字符串中
+
+if os.path.exists(SELF_SOCIAL_RELATIONSHIPS_PATH):
+    with open(SELF_SOCIAL_RELATIONSHIPS_PATH,"r",encoding="utf-8")as f:
+        self_social_relationships = json.load(f)
+    former_social_relationships_str = "之前的社交关系：\n" + self_social_relationships[-1]["social_relationship"]
+else:
+    former_social_relationships_str = ""
+
+# 5.2.5 使用flash_client更新社交关系属性，要求总结社交关系
+
+social_relationship_summary_prompt = OTHER_PROMPT_TEMPLATE['Social_Relationship_Summary'].format(
+    User_Identity=config["User_Identity"],
+    social_relationships=social_relationships_str)
+
+social_relationship_summary = long_client.generate_result(social_relationship_summary_prompt)
+
+print(social_relationship_summary)
+
+# self_social_relationships = []
+
+social_relationship_dict = {
+    "time":present_time,
+    "social_relationship":social_relationship_summary
+}
+
+self_social_relationships.append(social_relationship_dict)
+
+# 5.2.6 将更新的社交关系实时写入self_social_relationships.json中
+with open(SELF_SOCIAL_RELATIONSHIPS_PATH,"w",encoding="utf-8")as f:
+    json.dump(self_social_relationships,f,indent=2,ensure_ascii=False)
 
 
 
