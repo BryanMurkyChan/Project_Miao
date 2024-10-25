@@ -585,11 +585,13 @@ for memory in memory_db:
         today_memory.append(memory["date"] + " " + memory["memory"])
         today_memory+=[relate_memory for relate_memory in memory["attribute"]["relate_memory"]]
 
-today_memory_filter = []
-for memory in today_memory:
-    if memory not in today_memory_filter:
-        today_memory_filter.append(memory)
-today_memory = today_memory_filter
+# today_memory_filter = []
+# for memory in today_memory:
+#     if memory not in today_memory_filter:
+#         today_memory_filter.append(memory)
+# today_memory = today_memory_filter
+
+today_memory = list(set(today_memory))
 
 print(len(today_memory))
 print(today_memory)
@@ -661,7 +663,7 @@ with open(SELF_CHARACTERISTICS_PATH,"w",encoding="utf-8")as f:
     json.dump(self_characteristics,f,indent=2,ensure_ascii=False)
 
 # 5.2 社交关系自更新机制：从memorydb中配合vectorstore，基于语义相似度0.7设置“社交关系”检索阈值，配合selfquery机制，整合所有社交关系，更新社交关系属性，写入systemprompt中（sp部分需在prompt_template.py文件中更新）
-# 5.2.1 设置“社交关系”检索阈值，要求小于0.95，大于0.7
+# 5.2.1 设置“社交关系”检索阈值，要求小于0.95，大于0.6
 social_block_min = 0.6
 social_block_max = 0.95
 # 5.2.2 构建selfquery机制，遍历检索所有社交关系，根据相似度阈值剔除无关或高度重合内容，
@@ -702,12 +704,13 @@ for query_keyword in query_keywords:
         if similarity > social_block_min and similarity < social_block_max:
             social_relation_memories.append(query_result[0])
 
-social_relation_memories_filter = []
-for memory in social_relation_memories:
-    if memory not in social_relation_memories_filter:
-        social_relation_memories_filter.append(memory)
+social_relation_memories = list(set(social_relation_memories))
+# social_relation_memories_filter = []
+# for memory in social_relation_memories:
+#     if memory not in social_relation_memories_filter:
+#         social_relation_memories_filter.append(memory)
 
-social_relation_memories = social_relation_memories_filter
+# social_relation_memories = social_relation_memories_filter
 print(social_relation_memories)
 print(len(social_relation_memories))
 
